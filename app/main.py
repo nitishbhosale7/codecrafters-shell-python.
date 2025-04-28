@@ -21,12 +21,28 @@ class shell:
             
             self.history.append(command)
             
-            if command == "exit 0":
+            initial_command = command.split(" ")[0]
+            
+            args = command.split(" ")[1:]
+            
+            if self.execute(initial_command,args) == 0:
                 break
+            
+            
         
-            print(f"{command}: command not found")
         
-        return 0;
+    
+    def execute(self, command,args):
+        # This function is a placeholder for executing commands
+        # In a real shell, you would use subprocess or os.system to execute the command
+        match command:
+            case "exit":
+                if len(args) > 0 and args[0] == "0":
+                    return 0
+            case "echo":
+                print(" ".join(args))
+            case _:
+                print(f"{command}: command not found")
             
             
 
@@ -34,7 +50,12 @@ def main():
     
     terminal = shell()
     
-    terminal.start()
+    try:
+    
+        terminal.start()
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
     
 
 
