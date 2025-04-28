@@ -35,6 +35,7 @@ class shell:
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
+        print("path",sys.path)
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
@@ -47,6 +48,7 @@ class shell:
                 match next_command:
                     case "echo":
                         print("echo is a shell builtin")
+                        
                     case "exit":
                         print("exit is a shell builtin")
                     case "type":
