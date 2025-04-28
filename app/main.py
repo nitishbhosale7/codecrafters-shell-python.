@@ -9,7 +9,9 @@ class shell:
         self.repl()
         
     def repl(self):
+        int = 1
         while True:
+            print(f"Command {int}:")
             sys.stdout.write("$ ")  # Print the prompt
             sys.stdout.flush()  # Flush the output to ensure it appears immediately
             
@@ -25,7 +27,7 @@ class shell:
             
             if self.execute(initial_command, args) == 0:
                 break
-            
+            int += 1
     def getPathByCommandName(self, command_name):
         path_separator = os.pathsep
         path_variables = os.environ.get('PATH').split(path_separator)
