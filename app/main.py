@@ -31,8 +31,8 @@ class shell:
     def getPathByCommandName(self,command_name):
         path_seperater = os.pathsep
         path_variables = os.environ.get('PATH').split(path_seperater)
-        print("path: ",os.environ.get('PATH'))
-        print('path_variables:',path_variables)
+        # print("path: ",os.environ.get('PATH'))
+        # print('path_variables:',path_variables)
         for path in path_variables:
             extracted_path = os.path.join(path,command_name)
             if os.path.exists(extracted_path):
@@ -51,7 +51,7 @@ class shell:
             case "type":
                 next_command = args[0]
                 output_path  = self.getPathByCommandName(next_command)
-                print(f"output_path: {output_path}")
+                # print(f"output_path: {output_path}")
                 print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
                 # match next_command:
                 #     case "echo":
