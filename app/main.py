@@ -37,7 +37,6 @@ class shell:
             print(path.split("\\")[-1]);
             if command_name == path.split("/")[-1]:
                 return path
-        return None
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
