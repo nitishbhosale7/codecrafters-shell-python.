@@ -59,6 +59,9 @@ class shell:
                             print(f"{next_command} is {output_path}")
                         else:
                             print(f"{next_command} not found")
+                            
+            case "pwd":
+                print(os.getcwd())
             case _:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
