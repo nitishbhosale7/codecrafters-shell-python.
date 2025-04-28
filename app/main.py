@@ -32,7 +32,7 @@ class shell:
         path_seperater = os.pathsep
         path_variables = os.environ.get('PATH').split(path_seperater)
         for path in path_variables:
-            extracted_path = path.split("\\")[-1]
+            extracted_path = path.split("os.path.sep")[-1]
             if command_name == extracted_path:
                 return path
     
