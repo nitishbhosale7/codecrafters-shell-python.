@@ -41,6 +41,18 @@ class shell:
                     return 0
             case "echo":
                 print(" ".join(args))
+                
+            case "type":
+                next_command = args[0]
+                match next_command:
+                    case "echo":
+                        print("echo is a shell builtin")
+                    case "exit":
+                        print("exit is a shell builtin")
+                    case "type":
+                        print("type is a shell builtin")
+                    case _:
+                        print(f"{next_command} not found")
             case _:
                 print(f"{command}: command not found")
             
