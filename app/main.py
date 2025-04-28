@@ -50,6 +50,8 @@ class shell:
                         print("echo is a shell builtin")
                     case "exit":
                         print("exit is a shell builtin")
+                    case "pwd":
+                        print("pwd is a shell builtin")
                     case "type":
                         print("type is a shell builtin")
                     case _:
