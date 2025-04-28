@@ -5,50 +5,46 @@ class shell:
     def __init__(self):
         self.history = []
         
-        
     def start(self):
         self.repl()
         
-        
     def repl(self):
         while True:
-            # Uncomment this block to pass the first stage
-            sys.stdout.write("$ ")
-
+            sys.stdout.write("$ ")  # Print the prompt
+            sys.stdout.flush()  # Flush the output to ensure it appears immediately
+            
             # Wait for user input
             command = input()
             
             self.history.append(command)
             
-            initial_command = command.split(" ")[0]
+            # Split the command into initial command and arguments
+            parts = command.split(" ")
+            initial_command = parts[0]
+            args = parts[1:]
             
-            args = command.split(" ")[1:]
-            
-            if self.execute(initial_command,args) == 0:
+            if self.execute(initial_command, args) == 0:
                 break
             
-            
-    def getPathByCommandName(self,command_name):
-        path_seperater = os.pathsep
-        path_variables = os.environ.get('PATH').split(path_seperater)
+    def getPathByCommandName(self, command_name):
+        path_separator = os.pathsep
+        path_variables = os.environ.get('PATH').split(path_separator)
         for path in path_variables:
-            extracted_path = os.path.join(path,command_name)
+            extracted_path = os.path.join(path, command_name)
             if os.path.exists(extracted_path):
                 return extracted_path
-            
-    def execute(self, command,args):
-        # This function is a placeholder for executing commands
-        # In a real shell, you would use subprocess or os.system to execute the command
+        return None  # Return None if no path is found
+
+    def execute(self, command, args):
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
                     return 0
             case "echo":
                 print(" ".join(args))
-                
             case "type":
                 next_command = args[0]
-                output_path  = self.getPathByCommandName(next_command)
+                output_path = self.getPathByCommandName(next_command)
 
                 match next_command:
                     case "echo":
@@ -58,39 +54,26 @@ class shell:
                     case "type":
                         print("type is a shell builtin")
                     case _:
-                        print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
-                        
-                        
-                
-                        
-                
+                        if output_path:
+                            print(f"{next_command} is {output_path}")
+                        else:
+                            print(f"{next_command} not found")
             case _:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
-                    # os.execvp(command_path, [command] + args)
-                    os.execv(command_path, [command] + args)
-
+                    # Use os.execvp to replace the current process with the new command
+                    os.execvp(command_path, [command] + args)
                 else:
                     print(f"{command}: command not found")
-                    
         return None
-                
-            
-            
 
 def main():
-    
     terminal = shell()
     
     try:
-    
         terminal.start()
-        
     except Exception as e:
         print(f"An error occurred: {e}")
-    
-
 
 if __name__ == "__main__":
     main()
- 
