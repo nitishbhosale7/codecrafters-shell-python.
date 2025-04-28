@@ -35,8 +35,12 @@ class shell:
         for path in path_variables:
             print("path: ", path)
             print(path.split("\\")[-1]);
-            if command_name == path.split("/")[-1]:
+            extracted_path = path.split("\\")[-1]
+            print("extracted_path: ", extracted_path)
+            if command_name == extracted_path:
                 return path
+    
+    
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
