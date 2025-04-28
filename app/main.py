@@ -59,8 +59,11 @@ class shell:
                         print("exit is a shell builtin")
                     case "type":
                         print("type is a shell builtin")
+                    case _:
+                        print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
                         
-                print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
+                        
+                
                         
                 
             case _:
