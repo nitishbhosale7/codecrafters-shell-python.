@@ -21,33 +21,20 @@ class shell:
             
             self.history.append(command)
             
+            if command == "exit 0":
+                break
+        
             print(f"{command}: command not found")
-            
- 
-            
-            
-
-def repl():
-    while True:
-        # Uncomment this block to pass the first stage
-        sys.stdout.write("$ ")
-
-        # Wait for user input
-        command = input()
         
-        if command == "exit 0":
-            break
-        
-        print(f"{command}: command not found")
-        
-    return 0;
-
+        return 0;
+            
+            
 
 def main():
     
-    shell = shell()
+    terminal = shell()
     
-    shell.start()
+    terminal.start()
     
 
 
