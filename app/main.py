@@ -1,6 +1,5 @@
 import sys
-
-
+import os
 
 class shell:
     def __init__(self):
@@ -35,7 +34,7 @@ class shell:
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
-        print("path",sys.path)
+        print("path",os.pathsep)
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
