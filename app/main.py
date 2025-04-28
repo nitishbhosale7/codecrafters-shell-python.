@@ -34,12 +34,10 @@ class shell:
         print("path: ",os.environ.get('PATH'))
         print('path_variables:',path_variables)
         for path in path_variables:
-            extracted_path = path.split(os.path.sep)[-1]
-            print(f"extracted_path: {extracted_path}")
-            if command_name == extracted_path:
-                return path
-    
-    
+            extracted_path = os.path.join(path,command_name)
+            if os.path.exists(extracted_path):
+                return extracted_path
+            
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
