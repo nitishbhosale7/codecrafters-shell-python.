@@ -35,6 +35,8 @@ class shell:
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
         print("path",os.pathsep)
+        path_variable = os.environ.get('PATH')
+        print("PATH",path_variable)
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
