@@ -68,7 +68,8 @@ class shell:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
                     os.execvp(command_path, [command] + args)
-                    sys.stdout("$ ")  
+                    return 1
+
                 else:
                     print(f"{command}: command not found")
                 
