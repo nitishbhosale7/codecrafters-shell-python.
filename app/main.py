@@ -67,7 +67,10 @@ class shell:
             case "cd":
                 if len(args) > 0:
                     try:
-                        os.chdir(args[0])
+                        if args[0] == "~":
+                            os.chdir(os.path.expanduser("~"))
+                        else:
+                            os.chdir(args[0])
                     except FileNotFoundError:
                         print(f"{args[0]}: No such file or directory")
                 else:
