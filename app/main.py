@@ -71,7 +71,7 @@ class shell:
                     except FileNotFoundError:
                         print(f"{args[0]}: No such file or directory")
                 else:
-                    print("cd: missing argument")
+                    print("cd: missing argument.")
             case _:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
