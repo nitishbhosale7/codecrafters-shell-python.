@@ -9,12 +9,9 @@ class shell:
         self.repl()
         
     def repl(self):
-        int = 1
         while True:
-            print(f"Command {int}:")
             sys.stdout.write("$ ")  # Print the prompt
-            sys.stdout.flush()  # Flush the output to ensure it appears immediately
-            
+
             # Wait for user input
             command = input()
             
@@ -27,7 +24,7 @@ class shell:
             
             if self.execute(initial_command, args) == 0:
                 break
-            int += 1
+            
     def getPathByCommandName(self, command_name):
         path_separator = os.pathsep
         path_variables = os.environ.get('PATH').split(path_separator)
@@ -64,7 +61,8 @@ class shell:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
                     # Use os.execvp to replace the current process with the new command
-                    os.execvp(command_path, [command] + args)
+                    # os.execvp(command_path, [command] + args)
+                    os.system(command_path + " " + " ".join(args))
                 else:
                     print(f"{command}: command not found")
         return None
