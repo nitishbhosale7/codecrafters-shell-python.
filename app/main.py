@@ -34,7 +34,7 @@ class shell:
         print(path_variables);
         for path in path_variables:
             print("path: ", path)
-            print(path.split("/")[-1]);
+            print(path.split("\\")[-1]);
             if command_name == path.split("/")[-1]:
                 return path
         return None
