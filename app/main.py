@@ -62,6 +62,16 @@ class shell:
                             
             case "pwd":
                 print(os.getcwd())
+                
+                
+            case "cd":
+                if len(args) > 0:
+                    try:
+                        os.chdir(args[0])
+                    except FileNotFoundError:
+                        print(f"{args[0]}: No such file or directory")
+                else:
+                    print("cd: missing argument")
             case _:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
