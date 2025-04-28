@@ -28,15 +28,17 @@ class shell:
                 break
             
             
-        
-        
-    
+    def getPathByCommandName(self,command_name):
+        path_seperater = os.pathsep
+        path_variables = os.environ.get('PATH').split(path_seperater)
+        print("PATH",path_variable)
+        for path in path_variables:
+            if command_name == path.split("/")[-1]:
+                return path
+        return None
     def execute(self, command,args):
         # This function is a placeholder for executing commands
         # In a real shell, you would use subprocess or os.system to execute the command
-        print("path",os.pathsep)
-        path_variable = os.environ.get('PATH')
-        print("PATH",path_variable)
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
@@ -46,16 +48,19 @@ class shell:
                 
             case "type":
                 next_command = args[0]
-                match next_command:
-                    case "echo":
-                        print("echo is a shell builtin")
+                output_path  = self.getPathByCommandName(next_command)
+                print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
+                # match next_command:
+                #     case "echo":
+                #         print("echo is a shell builtin")
+                #     case "exit":
+                #         print("exit is a shell builtin")
+                #     case "type":
+                #         print("type is a shell builtin")
+                #     case _:
+                #         print(f"{next_command} not found")
                         
-                    case "exit":
-                        print("exit is a shell builtin")
-                    case "type":
-                        print("type is a shell builtin")
-                    case _:
-                        print(f"{next_command} not found")
+                
             case _:
                 print(f"{command}: command not found")
             
