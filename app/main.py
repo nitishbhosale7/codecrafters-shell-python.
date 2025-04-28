@@ -2,7 +2,7 @@ import sys
 
 
 
-class shell():
+class shell:
     def __init__(self):
         self.history = []
         
@@ -35,7 +35,12 @@ def repl():
         # Wait for user input
         command = input()
         
+        if command == "exit 0":
+            break
+        
         print(f"{command}: command not found")
+        
+    return 0;
 
 
 def main():
