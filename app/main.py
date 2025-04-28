@@ -51,17 +51,16 @@ class shell:
             case "type":
                 next_command = args[0]
                 output_path  = self.getPathByCommandName(next_command)
-                # print(f"output_path: {output_path}")
+
+                match next_command:
+                    case "echo":
+                        print("echo is a shell builtin")
+                    case "exit":
+                        print("exit is a shell builtin")
+                    case "type":
+                        print("type is a shell builtin")
+                        
                 print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
-                # match next_command:
-                #     case "echo":
-                #         print("echo is a shell builtin")
-                #     case "exit":
-                #         print("exit is a shell builtin")
-                #     case "type":
-                #         print("type is a shell builtin")
-                #     case _:
-                #         print(f"{next_command} not found")
                         
                 
             case _:
