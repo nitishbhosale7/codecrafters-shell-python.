@@ -50,6 +50,7 @@ class shell:
             case "type":
                 next_command = args[0]
                 output_path  = self.getPathByCommandName(next_command)
+                print(f"next_command: {next_command}")
                 print(f"output_path: {output_path}")
                 print(f"{next_command} is {output_path}") if output_path else print(f"{next_command} not found")
                 # match next_command:
