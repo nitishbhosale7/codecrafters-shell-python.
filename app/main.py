@@ -72,6 +72,8 @@ class shell:
 
                 else:
                     print(f"{command}: command not found")
+                    
+        return None
                 
             
             
