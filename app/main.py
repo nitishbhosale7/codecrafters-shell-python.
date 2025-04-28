@@ -31,9 +31,11 @@ class shell:
     def getPathByCommandName(self,command_name):
         path_seperater = os.pathsep
         path_variables = os.environ.get('PATH').split(path_seperater)
+        print("path: ",os.environ.get('PATH'))
         print('path_variables:',path_variables)
         for path in path_variables:
             extracted_path = path.split(os.path.sep)[-1]
+            print(f"extracted_path: {extracted_path}")
             if command_name == extracted_path:
                 return path
     
