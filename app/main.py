@@ -62,8 +62,8 @@ class shell:
                 if command_path:
                     # Use os.execvp to replace the current process with the new command
                     # os.execvp(command_path, [command] + args)
-                    print(f"args: ", args)
-                    os.system(command_path + " " + " ".join(args))
+                    newArgs = [command_path] + args
+                    os.system(command_path + " " + " ".join(newArgs))
                 else:
                     print(f"{command}: command not found")
         return None
