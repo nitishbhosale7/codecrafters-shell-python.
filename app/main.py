@@ -33,6 +33,7 @@ class shell:
         path_variables = os.environ.get('PATH').split(path_seperater)
         print(path_variables);
         for path in path_variables:
+            print(path.split("/")[-1]);
             if command_name == path.split("/")[-1]:
                 return path
         return None
