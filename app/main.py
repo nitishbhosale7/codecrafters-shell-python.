@@ -60,9 +60,6 @@ class shell:
             case _:
                 command_path = self.getPathByCommandName(command)
                 if command_path:
-                    # Use os.execvp to replace the current process with the new command
-                    # os.execvp(command_path, [command] + args)
-                    
                     os.system(command + " " + " ".join(args))
                 else:
                     print(f"{command}: command not found")
