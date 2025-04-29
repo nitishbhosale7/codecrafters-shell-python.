@@ -92,7 +92,7 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    os.execvp(command_path, [command] + args)
+                    os.system(f"{command_path} {' '.join(args)}")
                     
                     
                 else:
