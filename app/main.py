@@ -89,6 +89,8 @@ class shell:
                 if command_path:
                     # Use subprocess to handle more complex command execution
                     os.execv(command_path, [command] + args)
+                    self.repl();
+                    
                 else:
                     print(f"{command}: command not found")
         return None
