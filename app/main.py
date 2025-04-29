@@ -17,10 +17,17 @@ class shell:
             
             self.history.append(command)
             
+            if command.startswith("'"):
+                initial_command = command[0:command.find("'",1) + 1]
+                print("initial command: ",initial_command)
+
+            else:
+                parts = command.split(" ")
+                initial_command = parts[0]
+                args = parts[1:]
+            
             # Split the command into initial command and arguments
-            parts = command.split(" ")
-            initial_command = parts[0]
-            args = parts[1:]
+            
             
             if self.execute(initial_command, args) == 0:
                 break
@@ -76,9 +83,8 @@ class shell:
                 else:
                     print("cd: missing argument.")
             case _:
-                print(f"command: {command}")
                 command_path = self.getPathByCommandName(command)
-                print(f"command_path: {command_path}")
+                
                 if command_path:
                     os.system(command + " " + " ".join(args))
                 else:
