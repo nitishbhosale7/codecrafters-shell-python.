@@ -1,6 +1,7 @@
 import sys
 import os
-import shlex  # Import shlex for better command parsing
+import shlex # Import shlex for better command parsing
+import threading 
 
 class shell:
     def __init__(self):
@@ -92,8 +93,8 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    os.execvp(command_path, [command] + args)
-                    print('nitish');
+                    thread = threading.Thread(target=os.execvp, args=(command_path, [command] + args))
+                    thread.start()
                     
                     
                 else:
