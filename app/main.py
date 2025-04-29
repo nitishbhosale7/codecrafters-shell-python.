@@ -86,16 +86,12 @@ class shell:
                     print("cd: missing argument.")
             case _:
                 
-                if command.startswith("'") or command.startswith('"'):
-                    os.system(command + " " + " ".join(args))
-                    
+                command_path = self.getPathByCommandName(command)
+            
+                if command_path:
+                    os.system(command_path + " " + " ".join(args))
                 else:
-                    command_path = self.getPathByCommandName(command)
-                
-                    if command_path:
-                        os.system(command + " " + " ".join(args))
-                    else:
-                        print(f"{command}: command not found")
+                    print(f"{command}: command not found")
         return None
 
 def main():
