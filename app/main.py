@@ -20,6 +20,7 @@ class shell:
             # Use shlex.split to handle quoted strings properly
             try:
                 parts = shlex.split(command)
+                print('parts',parts)
             except ValueError as e:
                 print(f"Error parsing command: {e}")
                 continue
