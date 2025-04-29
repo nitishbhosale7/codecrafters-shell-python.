@@ -92,7 +92,8 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    os.system(f"{command_path} {' '.join(args)}")
+                    os.system(command_path, [command] + args)
+                    pass
                     
                     
                 else:
