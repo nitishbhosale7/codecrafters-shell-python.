@@ -84,15 +84,15 @@ class shell:
                 else:
                     print("cd: missing argument.")
             case _:
-                print('command',command)
+                # print('command',command)
                 
                 command_path = self.getPathByCommandName(command)
-                print('command_path',command_path)
-                print('args',args)
+                # print('command_path',command_path)
+                # print('args',args)
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    os.system(command_path, [command] + args)
+                    os.execvp(command_path, [command] + args)
                     
                     
                 else:
