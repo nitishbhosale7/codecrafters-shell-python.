@@ -87,6 +87,8 @@ class shell:
             case _:
                 
                 command_path = self.getPathByCommandName(command)
+                print(f"command: {command}")
+                print(f"command_path: {command_path}")
             
                 if command_path:
                     os.system(command_path + " " + " ".join(args))
