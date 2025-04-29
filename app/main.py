@@ -92,8 +92,8 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    os.system(command_path, [command] + args)
-                    pass
+                    os.execvp(command_path, [command] + args)
+                    print('nitish');
                     
                     
                 else:
