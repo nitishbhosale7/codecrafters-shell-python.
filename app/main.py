@@ -40,7 +40,7 @@ class shell:
                 if len(args) > 0 and args[0] == "0":
                     return 0
             case "echo":
-                print((" ".join(args)).replace("\"", "").replace("\'", ""))
+                print((" ".join(args)).replace("\"", "").replace("\'", "").strip())
             case "type":
                 next_command = args[0]
                 output_path = self.getPathByCommandName(next_command)
