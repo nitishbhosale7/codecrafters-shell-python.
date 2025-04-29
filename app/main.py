@@ -1,6 +1,6 @@
 import sys
 import os
-import shlex
+import shlex  # Import shlex for better command parsing
 
 class shell:
     def __init__(self):
@@ -11,28 +11,28 @@ class shell:
         
     def repl(self):
         while True:
-                    sys.stdout.write("$ ")  # Print the prompt
+            sys.stdout.write("$ ")  # Print the prompt
 
-                    # Wait for user input
-                    command = input()
-                    self.history.append(command)
-                    
-                    # Use shlex.split to handle quoted strings properly
-                    try:
-                        parts = shlex.split(command)
-                    except ValueError as e:
-                        print(f"Error parsing command: {e}")
-                        continue
-                    
-                    if not parts:
-                        continue
-                    
-                    initial_command = parts[0]
-                    args = parts[1:]
+            # Wait for user input
+            command = input()
+            self.history.append(command)
+            
+            # Use shlex.split to handle quoted strings properly
+            try:
+                parts = shlex.split(command)
+            except ValueError as e:
+                print(f"Error parsing command: {e}")
+                continue
+            
+            if not parts:
+                continue
+            
+            initial_command = parts[0]
+            args = parts[1:]
 
-                    # Execute the command
-                    if self.execute(initial_command, args) == 0:
-                        break
+            # Execute the command
+            if self.execute(initial_command, args) == 0:
+                break
             
     def getPathByCommandName(self, command_name):
         path_separator = os.pathsep
@@ -72,7 +72,6 @@ class shell:
             case "pwd":
                 print(os.getcwd())
                 
-                
             case "cd":
                 if len(args) > 0:
                     try:
@@ -85,13 +84,17 @@ class shell:
                 else:
                     print("cd: missing argument.")
             case _:
+                print('command',command)
                 
                 command_path = self.getPathByCommandName(command)
-                print(f"command: {command}")
-                print(f"command_path: {command_path}")
-            
+                print('command_path',command_path)
+                print('args',args)
+                
                 if command_path:
-                    os.system(command_path + " " + " ".join(args))
+                    # Use subprocess to handle more complex command execution
+                    os.system(command_path, [command] + args)
+                    
+                    
                 else:
                     print(f"{command}: command not found")
         return None
