@@ -76,7 +76,9 @@ class shell:
                 else:
                     print("cd: missing argument.")
             case _:
+                print(f"command: {command}")
                 command_path = self.getPathByCommandName(command)
+                print(f"command_path: {command_path}")
                 if command_path:
                     os.system(command + " " + " ".join(args))
                 else:
