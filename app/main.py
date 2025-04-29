@@ -19,13 +19,12 @@ class shell:
             
             if command.startswith("'"):
                 initial_command = command[0:command.find("'",1) + 1]
-                print("initial command: ",initial_command)
-                print("command:", command[command.find("'",1)+1:].lstrip())
+                args = command[command.find("'",1)+1:].strip()
                 
             elif command.startswith('"'):
                 initial_command = command[0:command.find('"',1) + 1]
-                print("initial command: ",initial_command)
-                print("command:", command[command.find('"',1)+1:].lstrip())
+                args = command[command.find('"',1)+1:].strip()
+
 
             else:
                 parts = command.split(" ")
