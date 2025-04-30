@@ -97,7 +97,7 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    subprocess.run([command_path] + args, check=True)
+                    subprocess.run([command] + args, check=True)
                     # os.exe(command_path, [command] + args)
                   
                     
