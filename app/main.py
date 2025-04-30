@@ -50,7 +50,7 @@ class shell:
     def execute(self, command, args):
         
         """Execute a command with redirect arguments."""
-        if '>' in args or '1>' in args:
+        if any(op in args for op in ('>', '1>', '2>')):
             self.handle_redirect(command, args)
             return None
         
