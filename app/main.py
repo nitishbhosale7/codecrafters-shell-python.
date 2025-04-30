@@ -48,6 +48,13 @@ class shell:
         return None  # Return None if no path is found
 
     def execute(self, command, args):
+        
+        """Execute a command with redirect arguments."""
+        if '>' in args or '1>' in args:
+            self.handle_redirect(command, args)
+            return None
+        
+        """Executing the other commands"""
         match command:
             case "exit":
                 if len(args) > 0 and args[0] == "0":
@@ -91,39 +98,36 @@ class shell:
                 # print('command',command)
                 # print('args',args)
                 
-                try:
                 
 
-                        
-                    if args.index('>') != -1:
-                        os.system( command + ' ' + " ".join(args) )
-                        return None
+                                        
+                command_path = self.getPathByCommandName(command)
+                # print('command_path',command_path)
+                                
+                if command_path:
+                    # Use subprocess to handle more complex command execution
+                    subprocess.run([command] + args, check=True)
+                    # os.exe(command_path, [command] + args)
+                
                     
-                except Exception as e:
                     
-                    try:
-                        if args.index('1>') != -1:                        
-                            index = args.index('1>')
-                            args.remove('1>')
-                            args.insert(index, '>')
-                            
-                    except:
-                        
-                        command_path = self.getPathByCommandName(command)
-                        # print('command_path',command_path)
-                        
-                        
-                        
-                        if command_path:
-                            # Use subprocess to handle more complex command execution
-                            subprocess.run([command] + args, check=True)
-                            # os.exe(command_path, [command] + args)
-                        
-                            
-                            
-                        else:
-                            print(f"{command}: command not found")
+                else:
+                    print(f"{command}: command not found")
         return None
+    
+    
+    def handle_redirect(self,command, args):
+        """Handle output redirection."""
+        if '>' in args:
+            index = args.index('>')
+            output_file = args[index + 1]
+            with open(output_file, 'w') as f:
+                subprocess.run([command] + args[:index], stdout=f)
+        elif '1>' in args:
+            index = args.index('1>')
+            output_file = args[index + 1]
+            with open(output_file, 'w') as f:
+                subprocess.run([command] + args[:index], stdout=f)
 
 def main():
     terminal = shell()
