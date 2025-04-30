@@ -2,6 +2,11 @@ import sys
 import os
 import shlex  # Import shlex for better command parsing
 import subprocess
+import readline
+
+ # Enable tab completion
+
+
 
 class shell:
     def __init__(self):
@@ -18,6 +23,7 @@ class shell:
             # Wait for user input
             command = input()
             self.history.append(command)
+            readline.parse_and_bind("tab: complete") 
             
             # Use shlex.split to handle quoted strings properly
             try:
