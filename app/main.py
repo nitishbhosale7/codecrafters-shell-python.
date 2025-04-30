@@ -128,6 +128,11 @@ class shell:
             output_file = args[index + 1]
             with open(output_file, 'w') as f:
                 subprocess.run([command] + args[:index], stdout=f)
+        elif '2>' in args:
+            index = args.index('2>')
+            output_file = args[index + 1]
+            with open(output_file, 'w') as f:
+                subprocess.run([command] + args[:index], stderr=f)
 
 def main():
     terminal = shell()
