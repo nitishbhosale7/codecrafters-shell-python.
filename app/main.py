@@ -1,7 +1,7 @@
 import sys
 import os
-import shlex # Import shlex for better command parsing
-import threading 
+import shlex  # Import shlex for better command parsing
+import subprocess
 
 class shell:
     def __init__(self):
@@ -11,6 +11,7 @@ class shell:
         self.repl()
         
     def repl(self):
+        
         while True:
             sys.stdout.write("$ ")  # Print the prompt
 
@@ -34,6 +35,8 @@ class shell:
             # Execute the command
             if self.execute(initial_command, args) == 0:
                 break
+            
+        return self.repl()
             
     def getPathByCommandName(self, command_name):
         path_separator = os.pathsep
@@ -93,8 +96,9 @@ class shell:
                 
                 if command_path:
                     # Use subprocess to handle more complex command execution
-                    thread = threading.Thread(target=os.execvp, args=(command_path, [command] + args))
-                    thread.start()
+                    subprocess.run([command_path] + args, check=True)
+                    os.exe(command_path, [command] + args)
+                    print('nitish');
                     
                     
                 else:
