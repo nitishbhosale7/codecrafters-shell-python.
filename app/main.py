@@ -18,7 +18,7 @@ class shell:
     def repl(self):
         
             # Setup tab completion
-        readline.set_completer(completer)
+        readline.set_completer(self.completer)
         readline.parse_and_bind("tab: complete")
         
         while True:
