@@ -93,7 +93,13 @@ class shell:
                 
                 try:
                 
-                    if args.index('>') != -1 or args.index('1>') != -1:
+                    if args.index('1>') != -1:
+                        
+                        index = args.index('1>')
+                        args.remove('1>')
+                        args.insert(index, '>')
+                        
+                    if args.index('>') != -1:
                         os.system( command + ' ' + " ".join(args) )
                         return None
                     
