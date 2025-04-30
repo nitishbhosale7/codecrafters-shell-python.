@@ -94,7 +94,11 @@ class shell:
                 # print('command_path',command_path)
                 # print('args',args)
                 
-                if command_path:
+                
+                if command_path and (command.startswith("'") or command.startswith('"')):
+                    os.system(command + " " + " ".join(args))
+                
+                elif command_path:
                     # Use subprocess to handle more complex command execution
                     subprocess.run([command_path] + args, check=True)
                     # os.exe(command_path, [command] + args)
