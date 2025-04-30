@@ -36,7 +36,7 @@ class shell:
             if self.execute(initial_command, args) == 0:
                 break
             
-        return self.repl()
+        
             
     def getPathByCommandName(self, command_name):
         path_separator = os.pathsep
