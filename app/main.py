@@ -50,7 +50,7 @@ class shell:
     def execute(self, command, args):
         
         """Execute a command with redirect arguments."""
-        if any(op in args for op in ('>', '1>', '2>','>>', '1>>')):
+        if any(op in args for op in ('>', '1>', '2>','>>', '1>>','2>>')):
             self.handle_redirect(command, args)
             return None
         
@@ -120,9 +120,9 @@ class shell:
         """Handle output redirection."""
         
         # Check for output redirection operators
-        redirection = [op for op in args if op in ('>', '1>', '2>', '>>', '1>>')]
+
         
-        redirection_ops = {'>': 'w', '1>': 'w', '2>': 'w', '>>': 'a', '1>>': 'a'}
+        redirection_ops = {'>': 'w', '1>': 'w', '2>': 'w', '>>': 'a', '1>>': 'a','2>>': 'a'}
         for op, mode in redirection_ops.items():
             if op in args:
                 index = args.index(op)
