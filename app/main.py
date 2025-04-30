@@ -93,11 +93,7 @@ class shell:
                 
                 try:
                 
-                    if args.index('1>') != -1:
-                        
-                        index = args.index('1>')
-                        args.remove('1>')
-                        args.insert(index, '>')
+
                         
                     if args.index('>') != -1:
                         os.system( command + ' ' + " ".join(args) )
@@ -105,21 +101,28 @@ class shell:
                     
                 except Exception as e:
                     
+                    try:
+                        if args.index('1>') != -1:                        
+                            index = args.index('1>')
+                            args.remove('1>')
+                            args.insert(index, '>')
+                            
+                    except:
                         
-                    command_path = self.getPathByCommandName(command)
-                    # print('command_path',command_path)
-                    
-                    
-                    
-                    if command_path:
-                        # Use subprocess to handle more complex command execution
-                        subprocess.run([command] + args, check=True)
-                        # os.exe(command_path, [command] + args)
-                    
+                        command_path = self.getPathByCommandName(command)
+                        # print('command_path',command_path)
                         
                         
-                    else:
-                        print(f"{command}: command not found")
+                        
+                        if command_path:
+                            # Use subprocess to handle more complex command execution
+                            subprocess.run([command] + args, check=True)
+                            # os.exe(command_path, [command] + args)
+                        
+                            
+                            
+                        else:
+                            print(f"{command}: command not found")
         return None
 
 def main():
