@@ -91,7 +91,8 @@ class shell:
                 # print('command',command)
                 # print('args',args)
                 
-                if args.find('>') != -1:
+                
+                if args.index('>') != -1:
                     os.system( command + ' ' + " ".join(args) )
                     return None
                     
