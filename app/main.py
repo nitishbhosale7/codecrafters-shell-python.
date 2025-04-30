@@ -17,7 +17,7 @@ class shell:
         
     def repl(self):
         
-            # Setup tab completion
+        # Setup tab completion
         readline.set_completer(self.completer)
         readline.parse_and_bind("tab: complete")
         
@@ -143,19 +143,18 @@ class shell:
                 
                 
     def completer(text: str, state: int):
-        shell_builtins = [
-            "alias", "bg", "bind", "break", "cd", "continue", "declare",
-            "dirs", "echo", "enable", "eval", "exec", "exit", "export",
-            "fc", "fg", "getopts", "hash", "help", "history", "jobs",
-            "kill", "let", "local", "logout", "popd", "pushd",
-            "pwd", "read", "readonly", "return", "set", "shift",
-            "shopt", "source", "suspend", "test", "times",
-            "trap", "type", "ulimit", "umask", "unalias",
-            # Add more built-in commands as needed
-        ]
+        shell_builtins = {
+        "exit": shell_builtin_exit,
+        "echo": shell_builtin_echo,
+        "type": shell_builtin_type,
+        "pwd": shell_builtin_pwd,
+        "cd": shell_builtin_cd,
+        }
         """Tab completion for builtin commands."""
         matches = [cmd + " " for cmd in shell_builtins if cmd.startswith(text)]
         return matches[state] if state < len(matches) else None
+    
+    
 
 def main():
     terminal = shell()
