@@ -17,13 +17,17 @@ class shell:
         
     def repl(self):
         
+            # Setup tab completion
+        readline.set_completer(completer)
+        readline.parse_and_bind("tab: complete")
+        
         while True:
             sys.stdout.write("$ ")  # Print the prompt
 
             # Wait for user input
             command = input()
             self.history.append(command)
-            readline.parse_and_bind("tab: complete") 
+            
             
             # Use shlex.split to handle quoted strings properly
             try:
@@ -136,6 +140,22 @@ class shell:
                 with open(output_file, mode) as f:
                     subprocess.run([command] + args[:index], stdout=f if '2' not in op else None, stderr=f if '2' in op else None)
                     break
+                
+                
+    def completer(text: str, state: int):
+        shell_builtins = [
+            "alias", "bg", "bind", "break", "cd", "continue", "declare",
+            "dirs", "echo", "enable", "eval", "exec", "exit", "export",
+            "fc", "fg", "getopts", "hash", "help", "history", "jobs",
+            "kill", "let", "local", "logout", "popd", "pushd",
+            "pwd", "read", "readonly", "return", "set", "shift",
+            "shopt", "source", "suspend", "test", "times",
+            "trap", "type", "ulimit", "umask", "unalias",
+            # Add more built-in commands as needed
+        ]
+        """Tab completion for builtin commands."""
+        matches = [cmd + " " for cmd in shell_builtins if cmd.startswith(text)]
+        return matches[state] if state < len(matches) else None
 
 def main():
     terminal = shell()
