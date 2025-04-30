@@ -91,25 +91,29 @@ class shell:
                 # print('command',command)
                 # print('args',args)
                 
+                try:
                 
-                if args.index('>') != -1:
-                    os.system( command + ' ' + " ".join(args) )
-                    return None
+                    if args.index('>') != -1:
+                        os.system( command + ' ' + " ".join(args) )
+                        return None
                     
-                command_path = self.getPathByCommandName(command)
-                # print('command_path',command_path)
-                
-                
-                
-                if command_path:
-                    # Use subprocess to handle more complex command execution
-                    subprocess.run([command] + args, check=True)
-                    # os.exe(command_path, [command] + args)
-                  
+                except Exception as e:
+                    
+                        
+                    command_path = self.getPathByCommandName(command)
+                    # print('command_path',command_path)
                     
                     
-                else:
-                    print(f"{command}: command not found")
+                    
+                    if command_path:
+                        # Use subprocess to handle more complex command execution
+                        subprocess.run([command] + args, check=True)
+                        # os.exe(command_path, [command] + args)
+                    
+                        
+                        
+                    else:
+                        print(f"{command}: command not found")
         return None
 
 def main():
