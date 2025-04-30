@@ -50,7 +50,7 @@ class shell:
     def execute(self, command, args):
         
         """Execute a command with redirect arguments."""
-        if any(op in args for op in ('>', '1>', '2>')):
+        if any(op in args for op in ('>', '1>', '2>','>>', '1>>')):
             self.handle_redirect(command, args)
             return None
         
@@ -118,21 +118,18 @@ class shell:
     
     def handle_redirect(self,command, args):
         """Handle output redirection."""
-        if '>' in args:
-            index = args.index('>')
-            output_file = args[index + 1]
-            with open(output_file, 'w') as f:
-                subprocess.run([command] + args[:index], stdout=f)
-        elif '1>' in args:
-            index = args.index('1>')
-            output_file = args[index + 1]
-            with open(output_file, 'w') as f:
-                subprocess.run([command] + args[:index], stdout=f)
-        elif '2>' in args:
-            index = args.index('2>')
-            output_file = args[index + 1]
-            with open(output_file, 'w') as f:
-                subprocess.run([command] + args[:index], stderr=f)
+        
+        # Check for output redirection operators
+        redirection = [op for op in args if op in ('>', '1>', '2>', '>>', '1>>')]
+        
+        redirection_ops = {'>': 'w', '1>': 'w', '2>': 'w', '>>': 'a', '1>>': 'a'}
+        for op, mode in redirection_ops.items():
+            if op in args:
+                index = args.index(op)
+                output_file = args[index + 1]
+                with open(output_file, mode) as f:
+                    subprocess.run([command] + args[:index], stdout=f if '2' not in op else None, stderr=f if '2' in op else None)
+                    break
 
 def main():
     terminal = shell()
