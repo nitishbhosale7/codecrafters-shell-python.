@@ -88,11 +88,13 @@ class shell:
                 else:
                     print("cd: missing argument.")
             case _:
-                # print('command',command)
+                print('command',command)
+                print('args',args)
+                print('command_path',command_path)
                 
                 command_path = self.getPathByCommandName(command)
-                # print('command_path',command_path)
-                # print('args',args)
+               
+                
                 
                 
                 if command_path:
