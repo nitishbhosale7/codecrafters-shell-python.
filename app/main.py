@@ -27,7 +27,7 @@ class shell:
             self.history.append(command)
             
             # Setup tab completion
-            readline.set_completer(self.tab_completer)
+            readline.set_completer(tab_completer)
             readline.parse_and_bind("tab: complete")
             
             
@@ -144,7 +144,7 @@ class shell:
                     break
                 
                 
-    def tab_completer(text, state):
+def tab_completer(text, state):
         _BUILT_INS  = ["echo", "exit", "cd", "pwd", "type"]
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
         
