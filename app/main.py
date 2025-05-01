@@ -16,9 +16,9 @@ class shell:
         path_variables = os.environ.get('PATH').split(path_separator)
         for path in path_variables:
             if os.path.exists(path):
-                self.Builtins.append(os.listdir(path))
+                self.Builtins.extend(os.listdir(path))
                 
-        print(f" Builtins: {self.Builtins}")
+        #print(f" Builtins: {self.Builtins}")
         
     def start(self):
         self.repl()
