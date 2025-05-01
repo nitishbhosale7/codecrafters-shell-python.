@@ -17,6 +17,8 @@ class shell:
         for path in path_variables:
             if os.path.exists(path):
                 self.Builtins.append(os.listdir(path))
+                
+        print(f" Builtins: {self.Builtins}")
         
     def start(self):
         self.repl()
@@ -149,7 +151,6 @@ class shell:
     def tab_completer(self, text, state):
         _BUILT_INS = self.Builtins 
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
-        
         if state < len(matches):
             return matches[state]
         else:
