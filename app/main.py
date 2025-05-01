@@ -17,9 +17,7 @@ class shell:
         
     def repl(self):
         
-        # Setup tab completion
-        readline.set_completer(self.tab_completer)
-        readline.parse_and_bind("tab: complete")
+
         
         while True:
             sys.stdout.write("$ ")  # Print the prompt
@@ -27,6 +25,10 @@ class shell:
             # Wait for user input
             command = input()
             self.history.append(command)
+            
+            # Setup tab completion
+            readline.set_completer(self.tab_completer)
+            readline.parse_and_bind("tab: complete")
             
             
             # Use shlex.split to handle quoted strings properly
@@ -145,7 +147,7 @@ class shell:
     def tab_completer(text, state):
         _BUILT_INS  = ["echo", "exit", "cd", "pwd", "type"]
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
-        print('state',state);
+        
         return matches[state] if state < len(matches) else 0
     
     
