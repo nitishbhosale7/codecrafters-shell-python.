@@ -15,7 +15,7 @@ class shell:
         path_separator = os.pathsep
         path_variables = os.environ.get('PATH').split(path_separator)
         for path in path_variables:
-            print('path commands' ,os.listdir(path))
+            print(f'path commands {path}' ,os.listdir(path))
         
     def start(self):
         self.repl()
