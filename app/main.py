@@ -143,9 +143,11 @@ class shell:
                 
                 
     def tab_completer(text, state):
-        _BUILT_INS  = ["echo", "exit", "cd", "pwd", "type"]
-        matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
-        return matches[state] if state < len(matches) else 0
+        print("text",text)
+        print("state",state)
+        # _BUILT_INS  = ["echo", "exit", "cd", "pwd", "type"]
+        # matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
+        # return matches[state] if state < len(matches) else 0
     
     
 
