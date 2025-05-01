@@ -16,21 +16,17 @@ class shell:
         self.repl()
         
     def repl(self):
-        
+    # Setup tab completion outside of the loop
+        readline.set_completer(self.tab_completer)
+        readline.parse_and_bind("tab: complete")
 
-        
         while True:
             sys.stdout.write("$ ")  # Print the prompt
 
             # Wait for user input
             command = input()
             self.history.append(command)
-            
-                # Setup tab completion
-            readline.set_completer(self.tab_completer)
-            readline.parse_and_bind("tab: complete")
-            
-            
+
             # Use shlex.split to handle quoted strings properly
             try:
                 parts = shlex.split(command)
@@ -144,11 +140,14 @@ class shell:
                     break
                 
                 
-    def tab_completer(self,text, state):
-        _BUILT_INS  = ["echo", "exit", "cd", "pwd", "type"]
+    def tab_completer(self, text, state):
+        _BUILT_INS = ["echo", "exit", "cd", "pwd", "type"]
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
         
-        return matches[state] if state < len(matches) else 0
+        if state < len(matches):
+            return matches[state]
+        else:
+            return None  # Return None for no more matches
     
     
 
