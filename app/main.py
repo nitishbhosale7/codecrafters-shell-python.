@@ -11,11 +11,12 @@ import readline
 class shell:
     def __init__(self):
         self.history = []
-        self.Bultins = ["echo", "exit", "cd", "pwd", "type"]
+        self.Builtins = ["echo", "exit", "cd", "pwd", "type"]
         path_separator = os.pathsep
         path_variables = os.environ.get('PATH').split(path_separator)
         for path in path_variables:
-            print(f'path commands {path}' ,os.listdir(path))
+            if os.path.exists(path):
+                self.Builtins.append(os.listdir(path))
         
     def start(self):
         self.repl()
@@ -146,7 +147,7 @@ class shell:
                 
                 
     def tab_completer(self, text, state):
-        _BUILT_INS = ["echo", "exit", "cd", "pwd", "type"] 
+        _BUILT_INS = self.Builtins 
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
         
         if state < len(matches):
