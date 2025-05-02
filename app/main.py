@@ -169,7 +169,7 @@ class shell:
             print("\n" + "  ".join(matches))
             sys.stdout.write("$ xyz_")  # Ensure prompt is reprinted correctly
             self.complete_state = 0
-            return matches
+            return matches[state]
         
         else:
             return None  # Return None for no more matches
