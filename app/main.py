@@ -19,6 +19,8 @@ class shell:
                 self.Builtins.extend(os.listdir(path))
                 
         self.complete_state = 0
+        
+        print(f"Shell initialized with builtins: {self.Builtins}")
                 
         #print(f" Builtins: {self.Builtins}")
         
