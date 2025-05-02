@@ -164,7 +164,7 @@ class shell:
             sys.stdout.flush()
             
         if len(matches) > 2 and self.complete_state == 2:
-            print("\n" + "  ".join(self.completion_options))
+            print("\n" + "  ".join(matches))
             sys.stdout.write("$ xyz_")  # Ensure prompt is reprinted correctly
             sys.stdout.flush()
             self.complete_state = 0
