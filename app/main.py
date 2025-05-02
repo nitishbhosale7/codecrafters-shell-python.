@@ -163,10 +163,9 @@ class shell:
             sys.stdout.write("\a")
             sys.stdout.flush()
             
-        if len(matches) > 2 and self.complete_state == 2:
+        if len(matches) > 1 and self.complete_state == 2:
             print("\n" + "  ".join(matches))
             sys.stdout.write("$ xyz_")  # Ensure prompt is reprinted correctly
-            sys.stdout.flush()
             self.complete_state = 0
             return matches
         
