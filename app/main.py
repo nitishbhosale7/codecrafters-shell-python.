@@ -154,6 +154,7 @@ class shell:
         _BUILT_INS = self.Builtins 
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
 
+
         if state == 0:
             self.complete_state = 1
             if state < len(matches):
