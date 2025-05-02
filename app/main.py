@@ -168,7 +168,7 @@ class shell:
             sys.stdout.write("$ xyz_")  # Ensure prompt is reprinted correctly
             sys.stdout.flush()
             self.complete_state = 0
-            return matches[state]
+            return matches
         
         else:
             return None  # Return None for no more matches
