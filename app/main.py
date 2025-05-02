@@ -18,6 +18,8 @@ class shell:
             if os.path.exists(path):
                 self.Builtins.extend(os.listdir(path))
                 
+        self.complete_state = 0
+                
         #print(f" Builtins: {self.Builtins}")
         
     def start(self):
@@ -25,7 +27,7 @@ class shell:
         
     def repl(self):
     # Setup tab completion outside of the loop
-        readline.set_completer(self.tab_completer)
+        readline.set_completer(self.tab_completer,)
         readline.parse_and_bind("tab: complete")
 
         while True:
@@ -151,8 +153,23 @@ class shell:
     def tab_completer(self, text, state):
         _BUILT_INS = self.Builtins 
         matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
-        if state < len(matches):
+
+        if state == 0:
+            self.complete_state = 1
+            if state < len(matches):
+                return matches[state]
+                  
+        if len(matches) > 1 and self.complete_state == 1:
+            sys.stdout.write("\a")
+            sys.stdout.flush()
+            
+        if len(matches) > 2 and self.complete_state == 2:
+            print("\n" + "  ".join(self.completion_options))
+            sys.stdout.write("$ xyz_")  # Ensure prompt is reprinted correctly
+            sys.stdout.flush()
+            self.complete_state = 0
             return matches[state]
+        
         else:
             return None  # Return None for no more matches
     
