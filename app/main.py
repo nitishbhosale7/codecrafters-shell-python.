@@ -20,7 +20,7 @@ class shell:
                 
         self.complete_state = 0
         
-        print(f"Shell initialized with builtins: {self.Builtins}")
+        #print(f"Shell initialized with builtins: {self.Builtins}")
                 
         #print(f" Builtins: {self.Builtins}")
         
@@ -161,6 +161,8 @@ class shell:
             self.complete_state = 1
             if state < len(matches):
                 return matches[state]
+            else:
+                return None  # No more matches
                   
         if len(matches) > 1 and self.complete_state == 1:
             sys.stdout.write("\a")
