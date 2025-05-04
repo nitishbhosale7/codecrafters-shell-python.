@@ -1,6 +1,6 @@
 import sys
 import os
-import shlex  # Import shlex for better command parsing
+import shlex
 import subprocess
 import readline
 
@@ -25,7 +25,6 @@ class Shell:
             command = input()
             self.history.append(command)
 
-            # Use shlex.split to handle quoted strings properly
             try:
                 parts = shlex.split(command)
             except ValueError as e:
@@ -38,7 +37,6 @@ class Shell:
             initial_command = parts[0]
             args = parts[1:]
 
-            # Execute the command
             if self.execute(initial_command, args) == 0:
                 break
 
@@ -48,7 +46,7 @@ class Shell:
             extracted_path = os.path.join(path, command_name)
             if os.path.exists(extracted_path):
                 return extracted_path
-        return None  # Return None if no path is found
+        return None
 
     def execute(self, command, args):
         if command == "exit":
@@ -87,6 +85,14 @@ class Shell:
         """Completer function for tab completion."""
         matches = [m for m in self.builtins if m.startswith(text)]
         
+        # Add external executables to the matches
+        path_variables = os.environ.get('PATH').split(os.pathsep)
+        for path in path_variables:
+            if os.path.exists(path):
+                for file in os.listdir(path):
+                    if file.startswith(text) and os.access(os.path.join(path, file), os.X_OK):
+                        matches.append(file)
+
         if state == 0:  # First call for this input, generate options
             self.complete_state = 1  # Indicate first TAB press
             if len(matches) > 1:
@@ -96,8 +102,7 @@ class Shell:
             return matches[state] + " "
         else:
             if self.complete_state == 1 and len(matches) > 1:
-                print("\nMatching commands:")
-                print("  ".join(matches))
+                print("\n" + "  ".join(matches))
                 self.complete_state = 0  # Reset state after displaying matches
             return None  # No more matches
 
