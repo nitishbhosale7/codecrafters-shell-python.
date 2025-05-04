@@ -168,6 +168,7 @@ class shell:
         elif len(matches) > 1 and self.complete_state == 1:
             # sys.stdout.write("inside second condition")
             sys.stdout.write("\a")
+            sys.stdout.write(f"$ xyz_{"".join(matches)}")
             sys.stdout.flush()
             
         elif len(matches) > 1 and self.complete_state == 2:
