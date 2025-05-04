@@ -164,11 +164,11 @@ class shell:
             else:
                 return None  # No more matches
                   
-        if len(matches) > 1 and self.complete_state == 1:
+        elif len(matches) > 1 and self.complete_state == 1:
             sys.stdout.write("\a")
             sys.stdout.flush()
             
-        if len(matches) > 1 and self.complete_state == 2:
+        elif len(matches) > 1 and self.complete_state == 2:
             print("matches:",matches)
             print("\n" + "  ".join(matches))
             sys.stdout.write("$ xyz_")
