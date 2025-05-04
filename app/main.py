@@ -174,7 +174,7 @@ class shell:
             # sys.stdout.write("inside third condition")
             print("matches:",matches)
             print("\n" + "  ".join(matches))
-            sys.stdout.write("$ xyz_")
+            sys.stdout.write(f"$ xyz_{"".join(matches)}")
             sys.stdout.flush()   # Ensure prompt is reprinted correctly
             self.complete_state = 0
             return matches[state]
