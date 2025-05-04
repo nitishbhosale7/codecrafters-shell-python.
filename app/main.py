@@ -4,38 +4,24 @@ import shlex  # Import shlex for better command parsing
 import subprocess
 import readline
 
- # Enable tab completion
-
-
-
-class shell:
+class Shell:
     def __init__(self):
         self.history = []
-        self.Builtins = ["echo", "exit", "cd", "pwd", "type"]
-        path_separator = os.pathsep
-        path_variables = os.environ.get('PATH').split(path_separator)
-        for path in path_variables:
-            if os.path.exists(path):
-                self.Builtins.extend(os.listdir(path))
-                
+        self.builtins = ["echo", "exit", "cd", "pwd", "type"]
         self.complete_state = 0
-        
-        #print(f"Shell initialized with builtins: {self.Builtins}")
-                
-        #print(f" Builtins: {self.Builtins}")
-        
-    def start(self):
-        self.repl()
-        
-    def repl(self):
-    # Setup tab completion outside of the loop
-        readline.set_completer(self.tab_completer,)
+        self.setup_autocomplete()
+
+    def setup_autocomplete(self):
+        """Set up tab completion."""
+        readline.set_completer(self.tab_completer)
         readline.parse_and_bind("tab: complete")
 
+    def start(self):
+        self.repl()
+
+    def repl(self):
         while True:
             sys.stdout.write("$ ")  # Print the prompt
-
-            # Wait for user input
             command = input()
             self.history.append(command)
 
@@ -55,12 +41,9 @@ class shell:
             # Execute the command
             if self.execute(initial_command, args) == 0:
                 break
-            
-        
-            
-    def getPathByCommandName(self, command_name):
-        path_separator = os.pathsep
-        path_variables = os.environ.get('PATH').split(path_separator)
+
+    def get_path_by_command_name(self, command_name):
+        path_variables = os.environ.get('PATH').split(os.pathsep)
         for path in path_variables:
             extracted_path = os.path.join(path, command_name)
             if os.path.exists(extracted_path):
@@ -68,127 +51,58 @@ class shell:
         return None  # Return None if no path is found
 
     def execute(self, command, args):
-        
-        """Execute a command with redirect arguments."""
-        if any(op in args for op in ('>', '1>', '2>','>>', '1>>','2>>')):
-            self.handle_redirect(command, args)
-            return None
-        
-        """Executing the other commands"""
-        match command:
-            case "exit":
-                if len(args) > 0 and args[0] == "0":
-                    return 0
-            case "echo":
-                print(" ".join(args))
-            case "type":
-                next_command = args[0]
-                output_path = self.getPathByCommandName(next_command)
-
-                match next_command:
-                    case "echo":
-                        print("echo is a shell builtin")
-                    case "exit":
-                        print("exit is a shell builtin")
-                    case "pwd":
-                        print("pwd is a shell builtin")
-                    case "type":
-                        print("type is a shell builtin")
-                    case _:
-                        if output_path:
-                            print(f"{next_command} is {output_path}")
-                        else:
-                            print(f"{next_command} not found")
-                            
-            case "pwd":
-                print(os.getcwd())
-                
-            case "cd":
-                if len(args) > 0:
-                    try:
-                        if args[0] == "~":
-                            os.chdir(os.path.expanduser("~"))
-                        else:
-                            os.chdir(args[0])
-                    except FileNotFoundError:
-                        print(f"{args[0]}: No such file or directory")
-                else:
-                    print("cd: missing argument.")
-            case _:
-                # print('command',command)
-                # print('args',args)
-                
-                
-
-                                        
-                command_path = self.getPathByCommandName(command)
-                # print('command_path',command_path)
-                                
+        if command == "exit":
+            return 0
+        elif command == "echo":
+            print(" ".join(args))
+        elif command == "type":
+            next_command = args[0] if args else None
+            if next_command in self.builtins:
+                print(f"{next_command} is a shell builtin")
+            else:
+                command_path = self.get_path_by_command_name(next_command)
                 if command_path:
-                    # Use subprocess to handle more complex command execution
-                    subprocess.run([command] + args, check=True)
-                    # os.exe(command_path, [command] + args)
-                
-                    
-                    
+                    print(f"{next_command} is {command_path}")
                 else:
-                    print(f"{command}: command not found")
+                    print(f"{next_command} not found")
+        elif command == "pwd":
+            print(os.getcwd())
+        elif command == "cd":
+            if args:
+                try:
+                    os.chdir(os.path.expanduser(args[0]))
+                except FileNotFoundError:
+                    print(f"{args[0]}: No such file or directory")
+            else:
+                print("cd: missing argument.")
+        else:
+            command_path = self.get_path_by_command_name(command)
+            if command_path:
+                subprocess.run([command] + args)
+            else:
+                print(f"{command}: command not found")
         return None
     
-    
-    def handle_redirect(self,command, args):
-        """Handle output redirection."""
-        
-        # Check for output redirection operators
-
-        
-        redirection_ops = {'>': 'w', '1>': 'w', '2>': 'w', '>>': 'a', '1>>': 'a','2>>': 'a'}
-        for op, mode in redirection_ops.items():
-            if op in args:
-                index = args.index(op)
-                output_file = args[index + 1]
-                with open(output_file, mode) as f:
-                    subprocess.run([command] + args[:index], stdout=f if '2' not in op else None, stderr=f if '2' in op else None)
-                    break
-                
-                
     def tab_completer(self, text, state):
-        _BUILT_INS = self.Builtins 
-        matches = [m + " " for m in _BUILT_INS if m.startswith(text)]
-
-
-        if state == 0:
-            # sys.stdout.write("inside first condition")
-            self.complete_state = 1
-            if len(matches) < 1:
-                return matches[state]
-            else:
-                return None  # No more matches
-                  
-        elif len(matches) > 1 and self.complete_state == 1:
-            sys.stdout.write("\a")
-            sys.stdout.write(" ".join(matches))
-            sys.stdout.write("$ xyz_")
-            return matches
-            sys.stdout.flush()
-            
-        elif len(matches) > 1 and self.complete_state == 2:
-            # sys.stdout.write("inside third condition")
-            print("matches:",matches)
-            print("\n" + "  ".join(matches))
-            sys.stdout.write(f"$ xyz_{"".join(matches)}")
-            sys.stdout.flush()   # Ensure prompt is reprinted correctly
-            self.complete_state = 0
-            return matches
+        """Completer function for tab completion."""
+        matches = [m for m in self.builtins if m.startswith(text)]
         
+        if state == 0:  # First call for this input, generate options
+            self.complete_state = 1  # Indicate first TAB press
+            if len(matches) > 1:
+                sys.stdout.write("\a")  # Ring the bell
+            return matches[state] + " " if state < len(matches) else None
+        elif state < len(matches):
+            return matches[state] + " "
         else:
-            return None  # Return None for no more matches
-    
-    
+            if self.complete_state == 1 and len(matches) > 1:
+                print("\nMatching commands:")
+                print("  ".join(matches))
+                self.complete_state = 0  # Reset state after displaying matches
+            return None  # No more matches
 
 def main():
-    terminal = shell()
-    
+    terminal = Shell()
     try:
         terminal.start()
     except Exception as e:
