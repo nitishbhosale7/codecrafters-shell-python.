@@ -166,8 +166,8 @@ class shell:
                 return None  # No more matches
                   
         elif len(matches) > 1 and self.complete_state == 1:
-            # sys.stdout.write("inside second condition")
             sys.stdout.write("\a")
+            sys.stdout.write(" ".join(matches))
             sys.stdout.write("$ xyz_")
             return matches
             sys.stdout.flush()
