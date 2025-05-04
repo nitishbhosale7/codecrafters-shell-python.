@@ -158,6 +158,7 @@ class shell:
 
 
         if state == 0:
+            sys.stdout.write("inside first condition")
             self.complete_state = 1
             if len(matches) > 1:
                 return matches[state]
@@ -165,10 +166,12 @@ class shell:
                 return None  # No more matches
                   
         elif len(matches) > 1 and self.complete_state == 1:
+            sys.stdout.write("inside second condition")
             sys.stdout.write("\a")
             sys.stdout.flush()
             
         elif len(matches) > 1 and self.complete_state == 2:
+            sys.stdout.write("inside third condition")
             print("matches:",matches)
             print("\n" + "  ".join(matches))
             sys.stdout.write("$ xyz_")
