@@ -164,17 +164,17 @@ class shell:
             else:
                 return None  # No more matches
                   
-        elif len(matches) > 1 and self.complete_state == 1:
-            sys.stdout.write("\a")
-            sys.stdout.flush()
+        # elif len(matches) > 1 and self.complete_state == 1:
+        #     sys.stdout.write("\a")
+        #     sys.stdout.flush()
             
-        elif len(matches) > 1 and self.complete_state == 2:
-            print("matches:",matches)
-            print("\n" + "  ".join(matches))
-            sys.stdout.write("$ xyz_")
-            sys.stdout.flush()   # Ensure prompt is reprinted correctly
-            self.complete_state = 0
-            return matches[state]
+        # elif len(matches) > 1 and self.complete_state == 2:
+        #     print("matches:",matches)
+        #     print("\n" + "  ".join(matches))
+        #     sys.stdout.write("$ xyz_")
+        #     sys.stdout.flush()   # Ensure prompt is reprinted correctly
+        #     self.complete_state = 0
+        #     return matches[state]
         
         else:
             return None  # Return None for no more matches
